@@ -1,24 +1,30 @@
 version: "3.6"
+
+x-rails: &rails
+  build: .
+  volumes:
+    - .:/rails-react-graphql
+    - web-gems:/home/rails-react-graphql
+  environment:
+    - DATABASE_URL=postgres://postgres:postgres@postgres:5432
+    - REDIS_URL=redis://redis
+  depends_on:
+    - postgres
+    - redis
+
 services:
   web:
+    <<: *rails
     tty: true
     stdin_open: true
-    build: .
     container_name: rails-react-graphql-web
     ports:
       - "3000:3000"
-    volumes:
-      - .:/rails-react-graphql
-      - web-gems:/home/rails-react-graphql
-    environment:
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432
     command: >
       sh -c '
         bundle check || bundle install &&
         rm -f tmp/pids/server.pid &&
         rails s -b 0.0.0.0'
-    depends_on:
-      - postgres
   postgres:
     image: postgres:12.3-alpine
     container_name: rails-react-graphql-postgres
@@ -28,6 +34,14 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5432"
+  worker:
+    <<: *rails
+    container_name: rails-react-graphql-worker
+    command: sidekiq -C config/sidekiq.yml
+  redis:
+    image: redis:6.0.5-alpine3.12
+    ports:
+      - "6379"
 volumes:
   web-gems:
   postgres-data:
