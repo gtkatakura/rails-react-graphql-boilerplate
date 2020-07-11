@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 gem 'sidekiq', '~> 6.1.0'
+gem 'graphql', '~> 1.11.1'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -44,6 +45,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry-byebug', '~> 3.9.0'
   gem 'pry-rails', '~> 0.3.9'
+  gem 'graphiql-rails', '~> 1.7.0'
 end
 
 group :test do
