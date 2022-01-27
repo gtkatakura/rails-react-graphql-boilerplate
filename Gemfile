@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
-gem 'sidekiq', '~> 6.1.0'
+gem 'sidekiq', '~> 6.4.0'
 gem 'graphql', '~> 1.11.1'
 
 # Reduces boot times through caching; required in config/boot.rb
